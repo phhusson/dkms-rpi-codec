@@ -19,3 +19,10 @@ obj-$(CONFIG_VIDEO_ISP_BCM2835)		+= bcm2835-isp/
 
 ccflags-y += -Idrivers/staging/vc04_services -D__VCCOREVER__=0x04000000
 
+KVERSION := $(shell uname -r)
+all:
+	$(MAKE) -C /lib/modules/$(KVERSION)/build M=$(PWD)/bcm2835-codec modules
+	cp bcm2835-codec/bcm2835-codec.ko bcm2835-codec.ko
+
+clean:
+	$(MAKE) -C /lib/modules/$(KVERSION)/build M=$(PWD)/bcm2835-codec clean
